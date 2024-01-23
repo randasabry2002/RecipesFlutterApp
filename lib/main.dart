@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recipes_flutter_app/screens/AddRecpies.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,5 +14,5 @@ Future<void> main() async {
           measurementId: "G-MB78XHYGVW")
 
   );
-  runApp(MaterialApp(home: Scaffold(backgroundColor: Colors.green,),));
+  runApp(MaterialApp(home: AddRecpies(),));
 }
