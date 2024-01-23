@@ -32,7 +32,7 @@ class AddRecpiesState extends State<AddRecpies>{
   Widget build(BuildContext context) {
     addRecipe();
 
-    return Scaffold(backgroundColor: Colors.pink,)
+    return Scaffold(backgroundColor: Colors.pink,);
   }
 
 }
