@@ -21,7 +21,7 @@ class firstpageState extends State<firstpage> {
   List<Widget> get pages => [
     HomeScreen(),
     SearchPage(),
-    FavoritePage(favoriteRecipes: [],),
+    FavoritePage(),
 
   ];
 
