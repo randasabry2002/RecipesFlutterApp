@@ -1,16 +1,11 @@
+
+
 import 'package:flutter/material.dart';
 
-// Define a Recipe class to represent a recipe item
-class Recipe {
-  final String name;
-  final String imageUrl;
-  bool isFavorite;
+import 'RecipeItem.dart';
+import 'categoruandrecipe.dart';
+import 'categoryItem.dart';
 
-  // Constructor to initialize the recipe
-  Recipe({required this.name, required this.imageUrl, this.isFavorite = false});
-}
-
-// StatefulWidget for the home screen
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() {
@@ -18,9 +13,7 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-// State class for the home screen
 class HomeScreenState extends State<HomeScreen> {
-  // List of Recipe objects representing recipes
   List<Recipe> recipes = [
     Recipe(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
     Recipe(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
@@ -30,7 +23,18 @@ class HomeScreenState extends State<HomeScreen> {
     Recipe(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
     Recipe(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
     Recipe(name: 'Salad', imageUrl: 'assets/images/salad.png'),
-    // Add more recipes as needed
+
+  ];
+
+  List<Category> categories = [
+    Category(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+    Category(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+    Category(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+    Category(name: 'Salad', imageUrl: 'assets/images/salad.png'),
+    Category(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+    Category(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+    Category(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+    Category(name: 'Salad', imageUrl: 'assets/images/salad.png'),
   ];
 
   @override
@@ -39,72 +43,210 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Home page'),
       ),
-      body: Container(
-        color: Colors.orange[300],
-        padding: EdgeInsets.all(8.0),
-        child: ListView.builder(
-          itemCount: recipes.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            Recipe recipe = recipes[index];
-            return RecipeItem(
-              recipe: recipe,
-              onFavoritePressed: () {
-                setState(() {
-                  recipe.isFavorite = !recipe.isFavorite; // Toggle isFavorite
-                });
-              },
-            );
-          },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.search, color: Colors.grey[700]),
+                  SizedBox(width: 8.0),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          hintStyle: TextStyle(color: Colors.grey[700]),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Container(
+              height: 300,
+              color: Colors.orange[300],
+              child: ListView.builder(
+                itemCount: categories.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  Category category = categories[index];
+                  return CategoryItem(
+                    nameCategory: category.name,
+                    imageUrlCategory: category.imageUrl,
+                  );
+                },
+              ),
+            ),
+
+            SizedBox(height: 20),
+            Container(
+              height: 300,
+              color: Colors.orange[300],
+              child: ListView.builder(
+                itemCount: recipes.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  Recipe recipe = recipes[index];
+                  return RecipeItem(
+                    recipe: recipe,
+                    onFavoritePressed: () {
+                      setState(() {
+                        recipe.isFavorite = !recipe.isFavorite;
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-// StatelessWidget to represent a recipe item
-class RecipeItem extends StatelessWidget {
-  final Recipe recipe;
-  final VoidCallback onFavoritePressed;
 
-  // Constructor to initialize RecipeItem
-  RecipeItem({required this.recipe, required this.onFavoritePressed});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(color: Colors.white,
-      width: 200, // Set the width as needed
-      margin: EdgeInsets.all(5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.asset(
-            recipe.imageUrl,
-            width: double.infinity,
-            height: 150, // Adjust the height as needed
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  recipe.name,
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  icon: Icon(
-                    recipe.isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: Colors.red,
-                  ),
-                  onPressed: onFavoritePressed,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+//
+// import 'RecipeItem.dart';
+// import 'categoruandrecipe.dart';
+// import 'categoryItem.dart';
+//
+// // StatefulWidget for the home screen
+// class HomeScreen extends StatefulWidget {
+//   @override
+//   State<HomeScreen> createState() {
+//     return HomeScreenState();
+//   }
+// }
+//
+// // State class for the home screen
+// class HomeScreenState extends State<HomeScreen> {
+//   // List of Recipe objects representing recipes
+//   List<Recipe> recipes = [
+//     Recipe(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+//     Recipe(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+//     Recipe(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+//     Recipe(name: 'Salad', imageUrl: 'assets/images/salad.png'),
+//     Recipe(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+//     Recipe(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+//     Recipe(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+//     Recipe(name: 'Salad', imageUrl: 'assets/images/salad.png'),
+//   ];
+//
+//   // List of Category objects representing categories
+//   List<Category> categories = [
+//     Category(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+//     Category(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+//     Category(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+//     Category(name: 'Salad', imageUrl: 'assets/images/salad.png'),
+//     Category(name: 'Spaghetti', imageUrl: 'assets/images/spaghetti_image.jpg'),
+//     Category(name: 'Pizza', imageUrl: 'assets/images/pizza.png'),
+//     Category(name: 'Burger', imageUrl: 'assets/images/burger_image.jpg'),
+//     Category(name: 'Salad', imageUrl: 'assets/images/salad.png'),
+//   ];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Home page'),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Column(
+//           children: [
+//             Container(
+//               padding: EdgeInsets.symmetric(horizontal: 8.0),
+//               decoration: BoxDecoration(
+//                 color: Colors.grey[200],
+//                 borderRadius: BorderRadius.circular(8.0),
+//               ),
+//               child: Row(
+//                 children: [
+//                   Icon(Icons.search, color: Colors.grey[700]),
+//                   SizedBox(width: 8.0),
+//                   Expanded(
+//                     child: Container(
+//                       padding: EdgeInsets.symmetric(horizontal: 8.0),
+//                       child: TextField(
+//                         style: TextStyle(color: Colors.black),
+//                         decoration: InputDecoration(
+//                           hintText: 'Search...',
+//                           hintStyle: TextStyle(color: Colors.grey[700]),
+//                           border: InputBorder.none,
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             SizedBox(height: 20),
+//             Container(
+//               height: 300,
+//               color: Colors.orange[300],
+//               padding: EdgeInsets.all(8.0),
+//               child: ListView.builder(
+//                 itemCount: categories.length,
+//                 scrollDirection: Axis.horizontal,
+//                 itemBuilder: (context, index) {
+//                   Category category = categories[index];
+//                   return CategoryItem(  // Return the CategoryItem widget
+//                     nameCategory: category.name,
+//                     imageUrlCategory: category.imageUrl,
+//                   );
+//                 },
+//               ),
+//             ),
+//
+//             SizedBox(height: 20),
+//             Container(
+//               height: 300,
+//               color: Colors.orange[300],
+//               padding: EdgeInsets.all(8.0),
+//               child: ListView.builder(
+//                 itemCount: recipes.length,
+//                 scrollDirection: Axis.horizontal,
+//                 itemBuilder: (context, index) {
+//                   Recipe recipe = recipes[index];
+//                   return RecipeItem(
+//                     recipe: recipe,
+//                     onFavoritePressed: () {
+//                       setState(() {
+//                         recipe.isFavorite = !recipe.isFavorite;
+//                       });
+//                     },
+//                   );
+//
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

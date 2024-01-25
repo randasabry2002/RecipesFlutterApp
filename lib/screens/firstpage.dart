@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'FavoritePage.dart';
-import 'SearchPage.dart';
+
 import 'home page.dart';
 
 class firstpage extends StatefulWidget{
@@ -20,7 +20,7 @@ class firstpageState extends State<firstpage> {
 
   List<Widget> get pages => [
     HomeScreen(),
-    SearchPage(),
+
     FavoritePage(),
 
   ];
@@ -38,7 +38,6 @@ class firstpageState extends State<firstpage> {
           },
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favourite"),
 
           ],
