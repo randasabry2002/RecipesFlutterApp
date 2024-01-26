@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recipes_flutter_app/screens/firstpage.dart';
+import 'package:recipes_flutter_app/screens/AddRecpies.dart';
+import 'package:recipes_flutter_app/screens/SplashScreen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,5 +17,10 @@ Future<void> main() async {
           measurementId: "G-MB78XHYGVW")
 
   );
-  runApp(MaterialApp(home: firstpage()));
+
+  // runApp(MaterialApp(home: firstpage(),debugShowCheckedModeBanner: false,));
+  runApp(MaterialApp(home: SplashView(),
+    debugShowCheckedModeBanner: false,
+    color: Colors.white,
+  ));
 }

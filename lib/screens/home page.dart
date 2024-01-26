@@ -40,9 +40,14 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+   backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Home page'),
+        centerTitle: true,
+        title: Text('Home page',style: TextStyle(fontFamily: 'Poppins') ,),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -110,6 +115,26 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
+
+//       body: Container(
+//
+//         padding: EdgeInsets.all(8.0),
+//         child: GridView.builder(
+//         gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2) ,
+//           itemCount: recipes.length,
+//           scrollDirection: Axis.horizontal,
+//           itemBuilder: (context, index) {
+//             Recipe recipe = recipes[index];
+//             return RecipeItem(
+//               recipe: recipe,
+//               onFavoritePressed: () {
+//                 setState(() {
+//                   recipe.isFavorite = !recipe.isFavorite; // Toggle isFavorite
+//                 });
+//               },
+//             );
+//           },
+
         ),
       ),
     );
