@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipes_flutter_app/screens/firstpage.dart';
-import 'package:recipes_flutter_app/screens/AddRecpies.dart';
+import 'package:recipes_flutter_app/screens/Navigation.dart';
+import 'package:recipes_flutter_app/AddRecpies.dart';
 import 'package:recipes_flutter_app/screens/SplashScreen.dart';
 
 
@@ -24,3 +24,5 @@ Future<void> main() async {
     color: Colors.white,
   ));
 }
+
+

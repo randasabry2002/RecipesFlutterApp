@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recipes_flutter_app/screens/firstpage.dart';
+import 'package:recipes_flutter_app/screens/Navigation.dart';
 
-import 'home page.dart';
+import 'homePage.dart';
 
 class SplashView extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _SplashViewState extends State<SplashView>
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => firstpage()),
+        MaterialPageRoute(builder: (context) => Navigation()),
       );
     });
 

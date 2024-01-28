@@ -1,28 +1,23 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'FavoritePage.dart';
+import 'homePage.dart';
 
-import 'home page.dart';
-
-class firstpage extends StatefulWidget{
+class Navigation extends StatefulWidget{
 
   @override
-  State<firstpage> createState() {
+  State<Navigation> createState() {
 
-    return firstpageState();
+    return NavigationState();
   }
 }
 
-class firstpageState extends State<firstpage> {
+class NavigationState extends State<Navigation> {
   int counterindex = 0;
 
   List<Widget> get pages => [
     HomeScreen(),
-
     FavoritePage(),
-
   ];
 
   @override

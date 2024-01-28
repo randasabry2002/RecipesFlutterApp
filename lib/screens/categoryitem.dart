@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
-  final String nameCategory;
-  final String imageUrlCategory;
+  String? nameCategory;
+  String? imageUrlCategory;
 
   // Constructor to initialize CategoryItem
-  CategoryItem({required this.nameCategory, required this.imageUrlCategory});
+  CategoryItem({super.key, this.nameCategory, this.imageUrlCategory});
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +13,16 @@ class CategoryItem extends StatelessWidget {
       margin: EdgeInsets.all(10.0),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: Image.asset(
-              imageUrlCategory,
-              width: 120, // Set the width as needed
-              height: 100, // Set the height as needed
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(width: 10), // Add some spacing between image and text
+          // ClipRRect(
+          //   borderRadius: BorderRadius.circular(12.0),
+          //   child: Image.asset(
+          //     imageUrlCategory!,
+          //     width: 120, // Set the width as needed
+          //     height: 100, // Set the height as needed
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
+          // SizedBox(width: 10), // Add some spacing between image and text
           SizedBox(
             width: 200, // Set a fixed width or adjust as needed
             child: Container(
@@ -40,15 +40,17 @@ class CategoryItem extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [Colors.black87, Colors.transparent],
+                  colors: [Colors.orange, Colors.transparent],
                 ),
               ),
-              child: Text(
-                nameCategory,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              child: Center(
+                child: Text(
+                  nameCategory!,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

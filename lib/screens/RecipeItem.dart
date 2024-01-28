@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/RecipesModel.dart';
 import 'categoruandrecipe.dart';
 
 class RecipeItem extends StatelessWidget {
-  final dynamic recipe; // Accept both Recipe and Category
-  final VoidCallback onFavoritePressed;
+  RecipesModel recipe; // Accept both Recipe and Category
+  VoidCallback onFavoritePressed;
 
   // Constructor to initialize RecipeItem
   RecipeItem({required this.recipe, required this.onFavoritePressed});
@@ -30,8 +31,8 @@ class RecipeItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         child: Stack(
           children: [
-            Image.asset(
-              recipe is Recipe ? recipe.imageUrl : recipe.imageUrlCategory,
+            Image.network(
+              recipe.RecipeImage,
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
@@ -54,7 +55,7 @@ class RecipeItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        recipe is Recipe ? recipe.name : recipe.nameCategory,
+                        recipe.RecipeName,
                         style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -66,9 +67,8 @@ class RecipeItem extends StatelessWidget {
                     SizedBox(width: 8.0), // Add some spacing
                     IconButton(
                       icon: Icon(
-                        recipe is Recipe
-                            ? (recipe.isFavorite ? Icons.favorite : Icons.favorite_border)
-                            : Icons.star, // Use appropriate icon for Category
+                            recipe.Fav ? Icons.favorite : Icons.favorite_border,
+                      // Use appropriate icon for Category
                         color: Colors.red,
                       ),
                       onPressed: onFavoritePressed,

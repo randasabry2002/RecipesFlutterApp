@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home page.dart';
+import 'homePage.dart';
 
 
 class FavoritePage extends StatefulWidget {
