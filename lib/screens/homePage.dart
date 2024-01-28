@@ -65,6 +65,12 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  const Text("Category Section",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
                   StreamBuilder<QuerySnapshot>(
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -107,6 +113,12 @@ class HomeScreenState extends State<HomeScreen> {
                     },
                     stream: _firestor.collection("Recipes").snapshots(),
                   ),
+
+                  const Text("meals Section",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,)
+                    ,),
 
                   GetBuilder<RecipesController>(
                     builder: (val) {

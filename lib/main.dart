@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:recipes_flutter_app/screens/Navigation.dart';
 import 'package:recipes_flutter_app/AddRecpies.dart';
 import 'package:recipes_flutter_app/screens/SplashScreen.dart';
-
+import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,7 @@ Future<void> main() async {
   );
 
   // runApp(MaterialApp(home: firstpage(),debugShowCheckedModeBanner: false,));
-  runApp(MaterialApp(home: SplashView(),
+  runApp(GetMaterialApp(home: SplashView(),
     debugShowCheckedModeBanner: false,
     color: Colors.white,
   ));
