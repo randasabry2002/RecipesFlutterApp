@@ -1,48 +1,36 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'FavoritePage.dart';
-
 import 'home page.dart';
 
-class firstpage extends StatefulWidget{
+class FirstPage extends StatelessWidget {
+  //looping on pages
+  final RxInt counterIndex = 0.obs; // Use RxInt for reactive state
 
-  @override
-  State<firstpage> createState() {
-
-    return firstpageState();
-  }
-}
-
-class firstpageState extends State<firstpage> {
-  int counterindex = 0;
-
-  List<Widget> get pages => [
+  final List<Widget> pages = [
     HomeScreen(),
-
     FavoritePage(),
-
   ];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: counterindex,
-          onTap: (index) {
-            setState(() {
-              counterindex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favourite"),
-
-          ],
+        bottomNavigationBar: Obx(
+          // Use Obx to listen to changes in counterIndex
+              () => BottomNavigationBar(
+            currentIndex: counterIndex.value,
+            onTap: (index) {
+              counterIndex.value = index; // Update the counterIndex on tap
+            },
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+              BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorite"),
+            ],
+          ),
         ),
-        body: pages[counterindex],
+        body: pages[counterIndex.value],
       ),
     );
   }
