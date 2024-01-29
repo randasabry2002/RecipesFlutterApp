@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'FavoritePage.dart';
-import 'home page.dart';
+import 'homepage.dart';
 
 class FirstPage extends StatelessWidget {
   //looping on pages

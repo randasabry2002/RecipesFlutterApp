@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'categoruandrecipe.dart';
+import 'recipe.dart';
 
 class RecipeItem extends StatelessWidget {
   final dynamic recipe; // Accept both Recipe and Category

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'RecipeItem.dart';
-import 'categoruandrecipe.dart';
+import 'recipe.dart';
 import 'categoryItem.dart';
 
 class HomeScreen extends StatefulWidget {
