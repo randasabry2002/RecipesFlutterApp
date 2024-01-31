@@ -1,19 +1,15 @@
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/RecipesModel.dart';
-
+import '../screens/details.dart';
 class RecipesController extends GetxController {
   var _firestor = FirebaseFirestore.instance;
-
   var Resipes = <RecipesModel>[].obs;
-
+  static var to;
   Future<void> getResipes() async {
     var response = _firestor.collection("Recipes");
-
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await response.get();
-
-
     Resipes.value = querySnapshot.docs.map((doc) {
       Timestamp recipeDate = doc.get('RecipeDate');
       return RecipesModel(
@@ -30,7 +26,9 @@ class RecipesController extends GetxController {
       );
     }).toList();
     update();
+  }
 
-    // print(Resipes[1].RecipeName.toString());
+  void navigateToDetails(RecipesModel selectedRecipe) {
+    Get.to(() => RecipeDetailsScreen(recipe: selectedRecipe));
   }
 }

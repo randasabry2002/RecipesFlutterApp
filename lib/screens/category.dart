@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'category.dart';
 import 'categoryItem.dart';
 
 class CategoryPage extends StatefulWidget {

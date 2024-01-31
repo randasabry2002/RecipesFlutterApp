@@ -9,14 +9,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  State<HomeScreen> createState() {
-    return HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
   }
-}
+
 
 class HomeScreenState extends State<HomeScreen> {
+
   var _firestor = FirebaseFirestore.instance;
-  final RecipesController controller = Get.put(RecipesController());
+    RecipesController controller = Get.put(RecipesController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const Text("Category Section",
+                   Text("Category Section",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,
@@ -103,7 +103,7 @@ class HomeScreenState extends State<HomeScreen> {
                               children: Categories,
                             ));
                       } else {
-                        return const Center(
+                        return  Center(
                           child: SpinKitWave(
                             color: Colors.black,
                             size: 50.0,
@@ -114,7 +114,7 @@ class HomeScreenState extends State<HomeScreen> {
                     stream: _firestor.collection("Recipes").snapshots(),
                   ),
 
-                  const Text("meals Section",
+                   Text("meals Section",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 25,)
@@ -137,6 +137,12 @@ class HomeScreenState extends State<HomeScreen> {
                                   onFavoritePressed: () {
                                     recipe.Fav = !recipe.Fav;
                                     val.update();
+
+                                  },
+                                  onTap: () {
+                                    // Navigate to details page
+                                  RecipesController.to.navigateToRecipeDetailsScreen(recipe);
+                                    // Get.to(() => RecipeDetailsScreen(recipe: recipe));
                                   },
                                 );
                               },
@@ -153,6 +159,7 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
     );
   }
 }

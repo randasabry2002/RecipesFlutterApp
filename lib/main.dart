@@ -1,14 +1,19 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:recipes_flutter_app/models/RecipesModel.dart';
 import 'package:recipes_flutter_app/screens/Navigation.dart';
 import 'package:recipes_flutter_app/AddRecpies.dart';
 import 'package:recipes_flutter_app/screens/SplashScreen.dart';
 import 'package:get/get.dart';
+import 'package:recipes_flutter_app/screens/details.dart';
+import 'package:recipes_flutter_app/screens/homePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  print("Initializing Firebase...");
   await Firebase.initializeApp(
-      options: const FirebaseOptions( apiKey: "AIzaSyAUDvl3fodKFTPdAJFca8V60UCgZuD4teo",
+      options:  FirebaseOptions( apiKey: "AIzaSyAUDvl3fodKFTPdAJFca8V60UCgZuD4teo",
           authDomain: "recipesflutterapp-fbc53.firebaseapp.com",
           projectId: "recipesflutterapp-fbc53",
           storageBucket: "recipesflutterapp-fbc53.appspot.com",
@@ -18,11 +23,13 @@ Future<void> main() async {
 
   );
 
+  print("Firebase initialization completed.");
+
   // runApp(MaterialApp(home: firstpage(),debugShowCheckedModeBanner: false,));
   runApp(GetMaterialApp(home: SplashView(),
     debugShowCheckedModeBanner: false,
-    color: Colors.white,
-  ));
+    color: Colors.white,),
+  );
 }
 
 

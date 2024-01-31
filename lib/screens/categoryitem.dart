@@ -5,10 +5,8 @@ import 'category.dart';
 class CategoryItem extends StatelessWidget {
   String? nameCategory;
   String? imageUrlCategory;
-
   // Constructor to initialize CategoryItem
   CategoryItem({super.key, this.nameCategory, this.imageUrlCategory});
-
   @override
   Widget build(BuildContext context) {
     return Container(
