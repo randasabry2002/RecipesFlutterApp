@@ -1,13 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'category.dart';
 
 class CategoryItem extends StatelessWidget {
   String? nameCategory;
   String? imageUrlCategory;
 
-  // Constructor to initialize CategoryItem
-  CategoryItem({super.key, this.nameCategory, this.imageUrlCategory});
+  CategoryItem({Key? key, this.nameCategory, this.imageUrlCategory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,14 @@ class CategoryItem extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 200, // Set a fixed width or adjust as needed
+            width: 200,
             child: InkWell(
               onTap: () {
-          // Use Get.to to navigate to the CategoryPage
-          Get.to(() => CategoryPage());
-    },
+                if (nameCategory != null) {
+                  // Use Get.to to navigate to the CategoryPageeeee and pass the category name
+                  Get.to(() => CategoryPageeeee(categoryName: nameCategory!));
+                }
+              },
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(

@@ -9,7 +9,9 @@ class RecipesModel{
   bool Fav;
   bool InShoppingList;
   DateTime RecipeDate;
+  String Recipeid;
 
-  RecipesModel({required this.RecipeName,required this.Area,required this.Category,required this.Procedure,required this.RecipeImage,required this.RecipeVideo,required this.Tags,required this.Fav,required this.InShoppingList,required this.RecipeDate,});
+
+  RecipesModel({required this.Recipeid,required this.RecipeName,required this.Area,required this.Category,required this.Procedure,required this.RecipeImage,required this.RecipeVideo,required this.Tags,required this.Fav,required this.InShoppingList,required this.RecipeDate,});
 
 }

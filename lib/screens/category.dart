@@ -1,45 +1,77 @@
 import 'package:flutter/material.dart';
-import 'category.dart';
-import 'categoryItem.dart';
+import 'package:get/get.dart';
 
-class CategoryPage extends StatefulWidget {
-  @override
-  _CategoryState createState() => _CategoryState();
-}
+import '../controllers/RecipesController.dart';
 
-class _CategoryState extends State<CategoryPage> {
-  List<CategoryItem> categories = [
-    CategoryItem(nameCategory: 'Spaghetti', imageUrlCategory: 'assets/images/spaghetti_image.jpg'),
-    CategoryItem(nameCategory: 'Pizza', imageUrlCategory: 'assets/images/pizza.png'),
-    CategoryItem(nameCategory: 'Burger', imageUrlCategory: 'assets/images/burger_image.jpg'),
-    CategoryItem(nameCategory: 'Salad', imageUrlCategory: 'assets/images/salad.png'),
-    CategoryItem(nameCategory: 'Spaghetti', imageUrlCategory: 'assets/images/spaghetti_image.jpg'),
-    CategoryItem(nameCategory: 'Pizza', imageUrlCategory: 'assets/images/pizza.png'),
-    CategoryItem(nameCategory: 'Burger', imageUrlCategory: 'assets/images/burger_image.jpg'),
-    CategoryItem(nameCategory: 'Salad', imageUrlCategory: 'assets/images/salad.png'),
-  ];
+class CategoryPageeeee extends StatelessWidget {
+  final String categoryName;
+
+  CategoryPageeeee({required this.categoryName});
+
+  final RecipesController categoryController = Get.put(RecipesController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Category Page'),
-      ),
-      body: Container(
-        // Remove the height property to let the ListView take up the full height
-        color: Colors.grey[300],
-        child: ListView.builder(
-          itemCount: categories.length,
-          // Set the scroll direction to vertical
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
-            CategoryItem category = categories[index];
-            return CategoryItem(
-              nameCategory: category.nameCategory,
-              imageUrlCategory: category.imageUrlCategory,
-            );
-          },
+        title: const Text('Category Page',
+          style: TextStyle(fontFamily: 'Poppins'),
         ),
+        centerTitle: true,
+        backgroundColor: Colors.orange[300],
+        elevation: 0.0,
+      ),
+      body: FutureBuilder(
+        future: categoryController.filterRecipesByCategory(categoryName),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "Category Name: $categoryName",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+
+              Expanded(
+                child: ListView.builder(
+                  itemCount: categoryController.RecipesByCategory.length,
+                  itemBuilder: (context, index) {
+                    var recipe = categoryController.RecipesByCategory[index];
+
+                    return Card(
+                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      elevation: 5,
+                      child: ListTile(
+                        title: Text(
+                          recipe.RecipeName ?? '',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        subtitle: Text(
+                          recipe.Area ?? '',  // Add more details if needed
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                        leading: CircleAvatar(
+                          radius: 30,
+                          backgroundImage: NetworkImage(recipe.RecipeImage ?? ''),
+                        ),
+                        // Add more details if needed
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

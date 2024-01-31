@@ -4,19 +4,22 @@ import '../models/RecipesModel.dart';
 
 class RecipesController extends GetxController {
   var _firestor = FirebaseFirestore.instance;
+  var Recipes = <RecipesModel>[].obs;
+  var favRecipes = <RecipesModel>[].obs;
+  var RecipesByCategory = <RecipesModel>[].obs;
 
-  var Resipes = <RecipesModel>[].obs;
 
-  Future<void> getResipes() async {
+  Future<void> getRecipes() async {
     var response = _firestor.collection("Recipes");
 
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await response.get();
 
-
-    Resipes.value = querySnapshot.docs.map((doc) {
+    Recipes.value = querySnapshot.docs.map((doc) {
       Timestamp recipeDate = doc.get('RecipeDate');
+      // print(doc.id);
       return RecipesModel(
+        Recipeid: doc.id,
         RecipeName: doc.get('RecipeName'),
         Category: doc.get('Category'),
         Area: doc.get('Area'),
@@ -30,7 +33,46 @@ class RecipesController extends GetxController {
       );
     }).toList();
     update();
-
-    // print(Resipes[1].RecipeName.toString());
   }
+
+  filterRecipesByCategory(String categoryName) async {
+    await getRecipes();
+    RecipesByCategory.clear();
+    if (Recipes.isNotEmpty) {
+      for (var recipe in Recipes) {
+        if (recipe.Category == categoryName) {
+          RecipesByCategory.add(recipe);
+        }
+      }
+    }
+    if (Recipes.isNotEmpty) {
+      for(var i in RecipesByCategory)
+        print(i.RecipeName.toString());
+    } else {
+      print("Categories list is empty");
+    }
+    update();
+  }
+
+  getFavs() async {
+    favRecipes.clear();
+    await getRecipes();
+    for(var Resipe in Recipes){
+      if(Resipe.Fav == true){
+        favRecipes.add(Resipe);
+      }
+    }
+    update();
+  }
+
+  changeFav(String recipeId,bool newFav) async {
+    await FirebaseFirestore.instance.collection('Recipes').doc(recipeId).update({'Fav': newFav});
+    print("Fav updated  "+ newFav.toString());
+    // update();
+    await getFavs();
+    update();
+
+  }
+
+
 }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../models/RecipesModel.dart';
-import 'categoruandrecipe.dart';
 
 class RecipeItem extends StatelessWidget {
-  RecipesModel recipe; // Accept both Recipe and Category
-  VoidCallback onFavoritePressed;
+  final RecipesModel recipe; // Accept both Recipe and Category
+  final VoidCallback onFavoritePressed;
 
   // Constructor to initialize RecipeItem
   RecipeItem({required this.recipe, required this.onFavoritePressed});

@@ -7,32 +7,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() {
-    return HomeScreenState();
-  }
-}
+class HomeScreen extends StatelessWidget {
 
-class HomeScreenState extends State<HomeScreen> {
-  var _firestor = FirebaseFirestore.instance;
+  final _firestor = FirebaseFirestore.instance;
   final RecipesController controller = Get.put(RecipesController());
 
   @override
   Widget build(BuildContext context) {
-    controller.getResipes();
+    controller.getRecipes();
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Home page',
           style: TextStyle(fontFamily: 'Poppins'),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.orange[300],
         elevation: 0.0,
       ),
+
       body: Column(
         children: [
           Expanded(
@@ -73,6 +68,7 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   StreamBuilder<QuerySnapshot>(
                     builder: (context, snapshot) {
+
                       if (snapshot.hasData) {
                         List<CategoryItem> Categories = [];
                         var responseCategories = snapshot.data!.docs;
@@ -128,14 +124,16 @@ class HomeScreenState extends State<HomeScreen> {
                             height: 300,
                             color: Colors.orange[300],
                             child: ListView.builder(
-                              itemCount: val.Resipes.length,
+                              itemCount: val.Recipes.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                RecipesModel recipe = val.Resipes[index];
+                                RecipesModel recipe = val.Recipes[index];
                                 return RecipeItem(
                                   recipe: recipe,
-                                  onFavoritePressed: () {
-                                    recipe.Fav = !recipe.Fav;
+                                  onFavoritePressed: () async {
+
+                                    await val.changeFav(recipe.Recipeid, !recipe.Fav);
+                                    // recipe.Fav = !recipe.Fav;
                                     val.update();
                                   },
                                 );
