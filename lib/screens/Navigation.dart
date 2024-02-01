@@ -34,7 +34,6 @@ class NavigationState extends State<Navigation> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favourite"),
-
           ],
         ),
         body: pages[counterindex],

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'category.dart';
+import '../screens/category.dart';
 
 class CategoryItem extends StatelessWidget {
   String? nameCategory;
@@ -17,7 +17,7 @@ class CategoryItem extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 200,
+            width: 150,
             child: InkWell(
               onTap: () {
                 if (nameCategory != null) {

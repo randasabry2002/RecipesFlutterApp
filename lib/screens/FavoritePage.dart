@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/RecipesModel.dart';
-import 'RecipeItem.dart';
+import '../widgets/RecipeItem.dart';
 import 'homePage.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,35 +23,38 @@ class FavoritePage extends StatelessWidget {
           centerTitle: true,
           elevation: 0.0,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: GetBuilder<RecipesController>(
-                  builder: (val) {
-                    return Container(
-                      height: 720,
-                      // color: Colors.orange[300],
-                      child: ListView.builder(
-                        itemCount: val.favRecipes.length,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: (context, index) {
-                          RecipesModel recipe = val.favRecipes[index];
-                          return RecipeItem(
-                            recipe: recipe,
-                            onFavoritePressed: () async {
-                              await val.changeFav(recipe.Recipeid, !recipe.Fav);
-                              val.update();
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: GetBuilder<RecipesController>(
+                    builder: (val) {
+                      return Container(
+                        height: 720,
+                        // color: Colors.orange[300],
+                        child: ListView.builder(
+                          itemCount: val.favRecipes.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            RecipesModel recipe = val.favRecipes[index];
+                            return RecipeItem(
+                              recipe: recipe,
+                              onFavoritePressed: () async {
+                                await val.changeFav(recipe.Recipeid, !recipe.Fav);
+                                val.update();
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

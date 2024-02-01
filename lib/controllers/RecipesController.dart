@@ -7,7 +7,7 @@ class RecipesController extends GetxController {
   var Recipes = <RecipesModel>[].obs;
   var favRecipes = <RecipesModel>[].obs;
   var RecipesByCategory = <RecipesModel>[].obs;
-
+  var RecipesByName = <RecipesModel>[].obs;
 
   Future<void> getRecipes() async {
     var response = _firestor.collection("Recipes");
@@ -32,6 +32,20 @@ class RecipesController extends GetxController {
         RecipeDate: recipeDate.toDate(),
       );
     }).toList();
+    update();
+  }
+
+  getRecipeByName(String Name) async {
+    RecipesByName.clear();
+    // await getRecipes();
+    for(var Resipe in Recipes){
+      if(Resipe.RecipeName == Name){
+        RecipesByName.add(Resipe);
+        print(Name + " equal  " +Resipe.RecipeName);
+      }
+    }
+    // print("RecipesByName.length = "+ RecipesByName.length.toString());
+
     update();
   }
 
