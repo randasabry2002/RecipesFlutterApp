@@ -12,7 +12,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class HomeScreen extends StatelessWidget {
   final _firestor = FirebaseFirestore.instance;
   final RecipesController controller = Get.put(RecipesController());
-  bool searchVisible=false;
   final SearchText = TextEditingController();
   final SearchRecipeController searchController = Get.put(SearchRecipeController());
   RxBool isSearching = false.obs;
