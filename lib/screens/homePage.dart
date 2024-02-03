@@ -53,12 +53,22 @@ class HomeScreen extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 8.0),
                               child: TextField(
                                 controller: SearchText,
+                                onChanged: (val){
+                                  SearchText.text=val;
+                                  if(val=="")
+                                    {
+                                      isSearching.value = false; // Update the search state
+                                      SearchText.clear();
+                                    }
+                                },
                                 style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(
                                   prefixIcon: InkWell(child: Icon(Icons.search, color: Colors.grey[700]),
                                     onTap: (){
+                                    if(SearchText.text!="") {
                                       isSearching.value = true; // Update the search state
                                       print("Search");
+                                    }
                                     },),
                                   suffixIcon: InkWell(child: Icon(Icons.cancel, color: Colors.grey[700]),
                                       onTap: (){
@@ -81,47 +91,57 @@ class HomeScreen extends StatelessWidget {
                     Obx(() {
                       if (isSearching.value) {
                         searchController.getSearchRecipes(SearchText.text.toString());
-                        return GetBuilder<SearchRecipeController>(
-                          builder: (val) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                  height: 700,
-                                  color: Colors.white,
-                                  child: ListView.builder(physics: NeverScrollableScrollPhysics(),
-                                    itemCount: val.searchResult.length,
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder: (context, index) {
-                                      // return Text(val.searchResult[index].RecipeName,style: TextStyle(fontSize: 25));
-                                      var recipe = val.searchResult[index];
-
-                                      return Card(
-                                        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                        elevation: 5,
-                                        child: ListTile(
-                                          title: Text(
-                                            recipe.RecipeName ?? '',
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          subtitle: Text(
-                                            recipe.Area ?? '',  // Add more details if needed
-                                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                                          ),
-                                          leading: CircleAvatar(
-                                            radius: 30,
-                                            backgroundImage: NetworkImage(recipe.RecipeImage ?? ''),
-                                          ),
-                                          // Add more details if needed
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
+                        if(searchController.searchResult.length==0)
+                          {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 50),
+                              child: const Center(child: Text("No Results",style: TextStyle(fontSize: 20),)),
                             );
-                          },
-                        );
+                          }
+                        else
+                          {
+                            return GetBuilder<SearchRecipeController>(
+                              builder: (val) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      height: 700,
+                                      color: Colors.white,
+                                      child: ListView.builder(physics: NeverScrollableScrollPhysics(),
+                                        itemCount: val.searchResult.length,
+                                        scrollDirection: Axis.vertical,
+                                        itemBuilder: (context, index) {
+                                          // return Text(val.searchResult[index].RecipeName,style: TextStyle(fontSize: 25));
+                                          var recipe = val.searchResult[index];
+
+                                          return Card(
+                                            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                            elevation: 5,
+                                            child: ListTile(
+                                              title: Text(
+                                                recipe.RecipeName ?? '',
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                              subtitle: Text(
+                                                recipe.Area ?? '',  // Add more details if needed
+                                                style: TextStyle(fontSize: 14, color: Colors.grey),
+                                              ),
+                                              leading: CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage: NetworkImage(recipe.RecipeImage ?? ''),
+                                              ),
+                                              // Add more details if needed
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
                       }
                       else{
                         return Column(
