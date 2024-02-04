@@ -27,23 +27,6 @@ class SigninState extends State<Signin> {
   final _auth = FirebaseAuth.instance;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  Future<void> chooseImage() async {
-    try {
-      final picker = ImagePicker();
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        setState(() {
-          _image = File(pickedFile.path);
-        });
-      } else {
-        print('No image selected.');
-      }
-    } catch (e) {
-      print('Error picking image: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,12 +161,23 @@ class SigninState extends State<Signin> {
                       idToken: googleAuth.idToken,
                     );
                     await _auth.signInWithCredential(credential);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Navigation(),
-                      ),
-                    );
+                    if (_auth.currentUser != null) {
+                      final SharedPreferences _prefs =
+                      await SharedPreferences.getInstance();
+                      await _prefs.setString(
+                          "email", _auth.currentUser!.email.toString());
+
+                      await usersController.getUserByEmail(_auth.currentUser!.email.toString());
+                      await _prefs.setString(
+                          "userName", usersController.userByEmail.value.UserName!);
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Navigation(),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.green,

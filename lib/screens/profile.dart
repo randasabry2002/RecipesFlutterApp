@@ -21,12 +21,28 @@ class _ProfilePageState extends State<ProfilePage> {
 
   getImage() async {
     await usersController.getUserByEmail(_auth.currentUser!.email!);
-    _image = File(usersController.userByEmail.value.ProfileImagePath!);
+    _image = await File(usersController.userByEmail.value.ProfileImagePath!);
     setState(() {
 
     });
   }
 
+  Future<void> chooseImage() async {
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      } else {
+        print('No image selected.');
+      }
+    } catch (e) {
+      print('Error picking image: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +72,6 @@ class _ProfilePageState extends State<ProfilePage> {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  // CircleAvatar(
-                  //   radius: 65,
-                  //   backgroundColor: Colors.black54, // Circle background color
-                  //   child: CircleAvatar(
-                  //     radius: 60,
-                  //     backgroundImage: Image.file(_image!),
-                  //   ),
-                  // ),
                   ClipOval(
                     child: _image != null
                         ? Image.file(
@@ -83,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     bottom: 5, // Adjust the position of the icon as needed
                     child: IconButton(
                       onPressed: () {
-                        // Handle the edit action
+                        chooseImage();
                       },
                       icon: Icon(Icons.edit,size: 35,),
                       color: Colors.black,

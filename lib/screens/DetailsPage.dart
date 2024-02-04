@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/IngredientsController.dart';
+import '../controllers/ShoppingListController.dart';
 import '../models/RecipesModel.dart';
 
-class RecipeDetailsScreen extends StatelessWidget {
+class RecipeDetailsScreen extends StatefulWidget {
   // Declare variable recipe to access the name and image of the meal
   final RecipesModel recipe;
+
+  RecipeDetailsScreen({Key? key, required this.recipe}) : super(key: key);
+
+  @override
+  State<RecipeDetailsScreen> createState() => _RecipeDetailsScreenState();
+}
+
+class _RecipeDetailsScreenState extends State<RecipeDetailsScreen> {
   final IngredientsController controller = Get.put(IngredientsController());
 
-  // Constructor for RecipeDetailsScreen
-  RecipeDetailsScreen({Key? key, required this.recipe}) : super(key: key);
+  final ShoppingListController shoppingListController = Get.put(ShoppingListController());
+
+  String? userName;
 
   @override
   Widget build(BuildContext context) {
     // Fetch recipe ingredients using the controller
-    controller.getRecipeIngredients(recipe.RecipeName!);
+    controller.getRecipeIngredients(widget.recipe.RecipeName!);
+
+    SharedPreferences.getInstance().then((value) {
+      userName = value.getString("userName").toString();
+    });
 
     // Scaffold widget for the overall screen structure
     return SafeArea(
@@ -32,7 +46,7 @@ class RecipeDetailsScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Image.network(
-                    recipe.RecipeImage!,
+                    widget.recipe.RecipeImage!,
                     width: double.infinity,
                     fit: BoxFit.fill, // Cover the entire container
 
@@ -40,19 +54,19 @@ class RecipeDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20), // Add space between image and text
-      
+
                 // Display recipe name
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   child: Center(
                     child: Text(//show the name of recipe bellow the photo
-                      recipe.RecipeName!,
+                      widget.recipe.RecipeName!,
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 21, fontWeight: FontWeight.w900, color: Colors.black),
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
-      
+
                 // Card containing ingredients
                 Card(
                   // Set the elevation to 5 for a subtle shadow effect
@@ -64,12 +78,12 @@ class RecipeDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Display the title "Ingredients" with a specific text style
-                        Text(
+                        const Text(
                           'Ingredients:',
                           style: TextStyle(fontFamily: 'Poppins', fontSize: 30),
                         ),
                         SizedBox(height: 20),  // Add a vertical spacing of 20 units
-      
+
                         // Use GetBuilder to dynamically display ingredients based on the controller's state
                         GetBuilder<IngredientsController>(
                           builder: (val) {
@@ -78,15 +92,34 @@ class RecipeDetailsScreen extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: val.oneRecipeIngredients.length,
                               itemBuilder: (context, index) {
+                                shoppingListController.inShoppingListOrNot(userName!,val.oneRecipeIngredients[index].IngredientName!);
+                                // print(shoppingListController.isInShoppingList.value);
                                 // Build a ListTile for each ingredient with a specific font size
                                 return ListTile(
                                   // if the Ingredients not null that come from firebase show it
                                   title: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        val.oneRecipeIngredients[index].IngredientName!,
-                                        style: TextStyle(fontSize: 20),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            val.oneRecipeIngredients[index].IngredientName!,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Spacer(),
+                                          // !shoppingListController.isInShoppingList.value?
+                                               IconButton(onPressed: (){
+                                                shoppingListController.addIngredientToShoppingList(userName!,val.oneRecipeIngredients[index].IngredientName!);
+                                                setState(() {
+                                                });
+                                                }, icon: Icon(Icons.add)),
+                                              // : IconButton(onPressed: (){
+                                              //   shoppingListController.deleteIngredientToShoppingList(userName!,val.oneRecipeIngredients[index].IngredientName!);
+                                              //   setState(() {
+                                              //   });
+                                              //   }, icon: Icon(Icons.minimize)),
+                                          Icon(Icons.add_shopping_cart_rounded),
+                                        ],
                                       ),
                                       // Check if Amount is not null before displaying it
                                       Text(
@@ -104,9 +137,9 @@ class RecipeDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-      
+
                 SizedBox(height: 20),
-      
+
                 // Card containing recipe procedure
                 Card(
                   elevation: 5,
@@ -124,7 +157,7 @@ class RecipeDetailsScreen extends StatelessWidget {
                         GetBuilder<IngredientsController>(
                           builder: (val) {
                             return Text(
-                              '${recipe.Procedure}',
+                              '${widget.recipe.Procedure}',
                               style: TextStyle(fontSize: 20),
                             );
                           },
