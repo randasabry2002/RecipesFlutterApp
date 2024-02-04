@@ -12,7 +12,20 @@
           "package_name": "com.example.recipes_flutter_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "128127910877-pv94c7egpaurpdf1mk3esgndu4bkev97.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.recipes_flutter_app",
+            "certificate_hash": "33b9e130d9fe741077a94b075a82d9648b6876cc"
+          }
+        },
+        {
+          "client_id": "128127910877-vm305rsn4lp6jm25qb209rv9pd3nva3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDM3Art7hcztKWZbT3_VJXXMqxhd6440cQ"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "128127910877-vm305rsn4lp6jm25qb209rv9pd3nva3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
