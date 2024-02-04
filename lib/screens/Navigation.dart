@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recipes_flutter_app/screens/profile.dart';
 import 'FavoritePage.dart';
 import 'homePage.dart';
 
@@ -18,6 +19,7 @@ class NavigationState extends State<Navigation> {
   List<Widget> get pages => [
     HomeScreen(),
     FavoritePage(),
+    ProfilePage(),
   ];
 
   @override
@@ -34,6 +36,7 @@ class NavigationState extends State<Navigation> {
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favourite"),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: "Profile"),
           ],
         ),
         body: pages[counterindex],

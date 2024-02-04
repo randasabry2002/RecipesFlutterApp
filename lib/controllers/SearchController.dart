@@ -31,21 +31,21 @@ class SearchRecipeController extends GetxController {
     for(var i=0;i<searchRecipesIngredients.length;i++){
       if(searchRecipesIngredients[i].RecipeName==searchTxt)
       {
-        print("it is a Recipe");
+        // print("it is a Recipe");
         searchRecipesResult.add(searchRecipesIngredients[i]);
         break;
       }
       else if(searchRecipesIngredients[i].IngredientName==searchTxt)
         {
-          print("it is an Ingredients");
+          // print("it is an Ingredients");
           searchRecipesResult.add(searchRecipesIngredients[i]);
         }
     }
-    print(searchRecipesResult.length.toString()+" length");
+    // print(searchRecipesResult.length.toString()+" length");
     searchResult.clear();
     for(var i=0;i<searchRecipesResult.length;i++){
       await controller.getRecipeByName(searchRecipesResult[i].RecipeName!);
-      print(controller.RecipesByName[0].RecipeName);
+      // print(controller.RecipesByName[0].RecipeName);
       searchResult.add(controller.RecipesByName[0]);
       // print(controller.RecipesByName[0].RecipeName+ " searchResult");
     }

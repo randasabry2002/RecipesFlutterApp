@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recipes_flutter_app/screens/Navigation.dart';
-
+import 'package:recipes_flutter_app/screens/Signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'homePage.dart';
 
 class SplashView extends StatefulWidget {
@@ -24,11 +25,36 @@ class _SplashViewState extends State<SplashView>
       vsync: this,
       duration: Duration(seconds: 2), // Adjust the duration as needed
     );
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Navigation()),
-      );
+
+
+    // Future.delayed(Duration(seconds: 2), () {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => Signin()),
+    //   );
+    // });
+
+    SharedPreferences.getInstance().then((value) {
+      String email = value.getString("email").toString();
+      print("email: $email");
+
+      // Simulate a delay for demonstration purposes
+      Future.delayed(Duration(seconds: 2), () {
+        if (email != 'null') {
+          // User is logged in, navigate to home or any other screen
+          // Replace `HomeScreen` with the actual screen you want to navigate to
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Navigation()),
+          );
+        } else {
+          // User is not logged in, navigate to Signin screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => Signin()),
+          );
+        }
+      });
     });
 
     // Define animation

@@ -30,6 +30,9 @@ class CategoryItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
+                    //اللون: يحدد لون الظل. في هذه الحالة، يكون Colors.grey.withOpacity(0.5)،  لون رمادي شبه شفاف.
+                    //
+                    // SpreadRadius:  يحدد مدى انتشار الظل. القيمة الموجبة تزيد حجم الظل، والقيمة السالبة يقل حجمه.
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
@@ -37,13 +40,17 @@ class CategoryItem extends StatelessWidget {
                       offset: Offset(0, 3),
                     ),
                   ],
+
                   gradient: LinearGradient(
+                    // a linear gradient. It is defined by two points, begin and end, and a list of colors that are used to create the gradient.
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
-                    colors: [Colors.orange, Colors.transparent],
+                    //an white color with 50% opacity at the bottom and transitions to Colors.transparent (fully transparent) at the top.
+                    colors: [Colors.white, Colors.transparent],
                   ),
                 ),
                 child: Center(
+                  //show name of category
                   child: Text(
                     nameCategory!,
                     style: TextStyle(

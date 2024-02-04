@@ -25,11 +25,13 @@ class IngredientsController extends GetxController {
     }).toList();
 
     oneRecipeIngredients.clear();
+    //add the amount condition
     for(var i=0;i<Recipes_Ingredients.length;i++){
-      if(Recipes_Ingredients[i].RecipeName==RecipeName)
+      if(Recipes_Ingredients[i].RecipeName==RecipeName && Recipes_Ingredients[i].Amount != null)
         {
           oneRecipeIngredients.add(Recipes_Ingredients[i]);
         }
+
     }
 
     update();

@@ -1,17 +1,17 @@
 class RecipesModel{
-  String RecipeName;
-  String Area;
-  String Category;
-  String Procedure;
-  String RecipeImage;
-  String RecipeVideo;
-  String Tags;
-  bool Fav;
-  bool InShoppingList;
-  DateTime RecipeDate;
-  String Recipeid;
+  String? RecipeName;
+  String? Area;
+  String? Category;
+  String? Procedure;
+  String? RecipeImage;
+  String? RecipeVideo;
+  String? Tags;
+  bool? Fav;
+  bool? InShoppingList;
+  DateTime? RecipeDate;
+  String? Recipeid;
 
 
-  RecipesModel({required this.Recipeid,required this.RecipeName,required this.Area,required this.Category,required this.Procedure,required this.RecipeImage,required this.RecipeVideo,required this.Tags,required this.Fav,required this.InShoppingList,required this.RecipeDate,});
+  RecipesModel({this.Recipeid,this.RecipeName,this.Area,this.Category,this.Procedure,this.RecipeImage,this.RecipeVideo,this.Tags,this.Fav,this.InShoppingList,this.RecipeDate,});
 
 }

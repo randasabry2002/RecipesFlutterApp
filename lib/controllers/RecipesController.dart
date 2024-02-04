@@ -41,7 +41,7 @@ class RecipesController extends GetxController {
     for(var Resipe in Recipes){
       if(Resipe.RecipeName == Name){
         RecipesByName.add(Resipe);
-        print(Name + " equal  " +Resipe.RecipeName);
+        print(Name + " equal  " +Resipe.RecipeName!);
       }
     }
     // print("RecipesByName.length = "+ RecipesByName.length.toString());
