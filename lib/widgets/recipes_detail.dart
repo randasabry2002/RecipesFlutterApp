@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/RecipesModel.dart';
 import '../screens/DetailsPage.dart';
-// صفحة تفاصيل الوصفة
 
 class RecipesListPage extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -41,16 +40,25 @@ class RecipesListPage extends StatelessWidget {
           return ListView.builder(
             itemCount: recipes.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(recipes[index].RecipeName),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RecipeDetailsScreen(recipe: recipes[index]),
-                    ),
-                  );
-                },
+              return Card(
+                elevation: 5,
+                child: ListTile(
+                  title: Text(recipes[index].RecipeName),
+                  subtitle: Image.network(
+                    recipes[index].RecipeImage,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.cover,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipeDetailsScreen(recipe: recipes[index]),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           );

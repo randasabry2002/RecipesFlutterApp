@@ -18,7 +18,7 @@ class CategoryPageeeee extends StatelessWidget {
           style: TextStyle(fontFamily: 'Poppins'),
         ),
         centerTitle: true,
-        backgroundColor: Colors.orange[300],
+        backgroundColor: Colors.white,
         elevation: 0.0,
       ),
       body: FutureBuilder(
