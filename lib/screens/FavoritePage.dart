@@ -19,7 +19,7 @@ class FavoritePage extends StatelessWidget {
           title: const Text('Favorite Page',
             style: TextStyle(fontFamily: 'Poppins'),
           ),
-          backgroundColor: Colors.orange[300],
+          backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0.0,
         ),

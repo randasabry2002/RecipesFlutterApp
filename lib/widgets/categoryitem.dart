@@ -13,7 +13,7 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(7.0),
       child: Row(
         children: [
           SizedBox(

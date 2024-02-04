@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
 import '../models/RecipesModel.dart';
 
 class RecipeItem extends StatelessWidget {
-  final RecipesModel recipe; // Accept both Recipe and Category
+  final RecipesModel recipe;
   final VoidCallback onFavoritePressed;
   final Function()? onTap;
 
-  // Constructor to initialize RecipeItem
-  RecipeItem({required this.recipe, required this.onFavoritePressed,this.onTap,});
+  RecipeItem({required this.recipe, required this.onFavoritePressed, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +14,8 @@ class RecipeItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.all(10.0),
-        width: 200, // Set the width as needed
-        height: 200, // Set a fixed height
+        width: 200,
+        height: 250,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
@@ -66,11 +64,10 @@ class RecipeItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      SizedBox(width: 8.0), // Add some spacing
+                      SizedBox(width: 8.0),
                       IconButton(
                         icon: Icon(
-                              recipe.Fav ? Icons.favorite : Icons.favorite_border,
-                        // Use appropriate icon for Category
+                          recipe.Fav ? Icons.favorite : Icons.favorite_border,
                           color: Colors.red,
                         ),
                         onPressed: onFavoritePressed,
