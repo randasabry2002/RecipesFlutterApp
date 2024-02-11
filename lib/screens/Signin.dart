@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import '../controllers/UsersController.dart';
 import 'Navigation.dart';
 import 'package:get/get.dart';
-
 class Signin extends StatefulWidget {
   @override
   State<Signin> createState() {
@@ -18,12 +17,16 @@ class Signin extends StatefulWidget {
 }
 
 class SigninState extends State<Signin> {
+  bool isValidEmail(String email) {
+    // Regular expression to check for a valid email format
+    final RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return regex.hasMatch(email);
+  }
+
   String password = '';
   String email = '';
   bool isPasswordVisible = true;
-  File? _image;
   final UsersController usersController = Get.put(UsersController());
-
   final _auth = FirebaseAuth.instance;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -31,42 +34,40 @@ class SigninState extends State<Signin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Sign In',
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      //   backgroundColor: Colors.cyan,
-      // ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 250, 20, 50),
+          padding: const EdgeInsets.fromLTRB(20, 30, 20, 50),
           child: Column(
             children: [
-              const SizedBox(height: 60),
-
+              const SizedBox(height: 10),
+              Image.asset(
+                'assets/images/recipeicon.png',
+                fit: BoxFit.fill,
+              ),
+              const SizedBox(height: 20),
               TextField(
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   setState(() {
                     email = value;
                   });
+                  // Check if the entered email is in a valid format
+
                 },
                 decoration: const InputDecoration(
                   hintText: 'Enter your email',
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                    borderSide: BorderSide(color: Colors.green, width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               TextField(
                 obscureText: isPasswordVisible,
                 textAlign: TextAlign.center,
@@ -74,6 +75,13 @@ class SigninState extends State<Signin> {
                   setState(() {
                     password = value;
                   });
+                  if (password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Enter your password"),
+                      ),
+                    );
+                  }
                 },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
@@ -88,18 +96,17 @@ class SigninState extends State<Signin> {
                   ),
                   hintText: 'Enter your password',
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(50)),
                   ),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2),
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                    borderSide: BorderSide(color: Colors.green, width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
               SizedBox(
                 width: 150,
                 height: 50,
@@ -110,13 +117,15 @@ class SigninState extends State<Signin> {
                           email: email, password: password);
                       if (_auth.currentUser != null) {
                         final SharedPreferences _prefs =
-                            await SharedPreferences.getInstance();
+                        await SharedPreferences.getInstance();
                         await _prefs.setString(
                             "email", _auth.currentUser!.email.toString());
 
-                        await usersController.getUserByEmail(_auth.currentUser!.email.toString());
+                        await usersController.getUserByEmail(
+                            _auth.currentUser!.email.toString());
                         await _prefs.setString(
-                            "userName", usersController.userByEmail.value.UserName!);
+                            "userName",
+                            usersController.userByEmail.value.UserName!);
 
                         Navigator.pushReplacement(
                           context,
@@ -126,6 +135,11 @@ class SigninState extends State<Signin> {
                         );
                       }
                     } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Invalid email or password"),
+                        ),
+                      );
                       print("Wrong Email or Password");
                     }
                   },
@@ -141,9 +155,7 @@ class SigninState extends State<Signin> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 40),
-
               SizedBox(
                 width: 300,
                 height: 50,
@@ -151,10 +163,10 @@ class SigninState extends State<Signin> {
                   onPressed: () async {
                     await GoogleSignIn().signOut();
                     final GoogleSignInAccount? googleUser =
-                        await GoogleSignIn().signIn();
+                    await GoogleSignIn().signIn();
 
                     final GoogleSignInAuthentication googleAuth =
-                        await googleUser!.authentication;
+                    await googleUser!.authentication;
 
                     final credential = GoogleAuthProvider.credential(
                       accessToken: googleAuth.accessToken,
@@ -167,9 +179,11 @@ class SigninState extends State<Signin> {
                       await _prefs.setString(
                           "email", _auth.currentUser!.email.toString());
 
-                      await usersController.getUserByEmail(_auth.currentUser!.email.toString());
+                      await usersController.getUserByEmail(
+                          _auth.currentUser!.email.toString());
                       await _prefs.setString(
-                          "userName", usersController.userByEmail.value.UserName!);
+                          "userName",
+                          usersController.userByEmail.value.UserName!);
 
                       Navigator.pushReplacement(
                         context,
@@ -191,27 +205,24 @@ class SigninState extends State<Signin> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 80),
-
               RichText(
                 text: TextSpan(
                   style: const TextStyle(color: Colors.grey, fontSize: 20.0),
                   children: <TextSpan>[
                     const TextSpan(text: "If you don't have account "),
                     TextSpan(
-                        text: 'Sign up',
-                        style: const TextStyle(color: Colors.green),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            print('Sign up');
-                            Get.to(() =>
-                                SignUp());
-                          }),
+                      text: 'Sign up',
+                      style: const TextStyle(color: Colors.green),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          print('Sign up');
+                          Get.to(() => SignUp());
+                        },
+                    ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),

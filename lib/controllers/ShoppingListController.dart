@@ -2,19 +2,17 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/ShoppingListModel.dart';
 
-
 class ShoppingListController extends GetxController {
-  var _firestor = FirebaseFirestore.instance;
+  var _firestore = FirebaseFirestore.instance;
   var ShoppingList = <ShoppingListModel>[].obs;
   var UserShoppingList = <ShoppingListModel>[].obs;
   var ItemInShoppingList = ShoppingListModel().obs;
   var isInShoppingList = false.obs;
 
+  var shoppingCounter = 0.obs; // New variable to track shopping counter
 
   Future<void> getShoppingList() async {
-    var response = _firestor.collection("ShoppingList");
-
-    // Get docs from collection reference
+    var response = _firestore.collection("ShoppingList");
     QuerySnapshot querySnapshot = await response.get();
 
     ShoppingList.value = querySnapshot.docs.map((doc) {
@@ -26,56 +24,46 @@ class ShoppingListController extends GetxController {
         Amount: doc.get('Amount'),
       );
     }).toList();
-    // update();
   }
 
-  getUserShoppingList(String userName){
+  getUserShoppingList(String userName) {
     UserShoppingList.clear();
     getShoppingList();
 
-    for(var i=0;i<ShoppingList.length;i++){
-      if(ShoppingList[i].UserName==userName){
+    for (var i = 0; i < ShoppingList.length; i++) {
+      if (ShoppingList[i].UserName == userName) {
         UserShoppingList.add(ShoppingList[i]);
       }
     }
     update();
   }
 
-  inShoppingListOrNot(String userName,String ingredientName) async {
-    isInShoppingList.value=false;
+  inShoppingListOrNot(String userName, String ingredientName) async {
+    isInShoppingList.value = false;
     await getUserShoppingList(userName);
 
-    for(var i=0 ;i<UserShoppingList.length;i++){
-      if(UserShoppingList[i].IngredientName==ingredientName){
-        isInShoppingList.value=true;
-        ItemInShoppingList.value=UserShoppingList[i];
+    for (var i = 0; i < UserShoppingList.length; i++) {
+      if (UserShoppingList[i].IngredientName == ingredientName) {
+        isInShoppingList.value = true;
+        ItemInShoppingList.value = UserShoppingList[i];
       }
     }
     update();
   }
 
   deleteIngredientToShoppingList(String docId) async {
-    // await inShoppingListOrNot(userName,ingredientName);
-
-    // String docId=ItemInShoppingList.value.DocId!;
-
     try {
-      // Delete the document
-      await _firestor.collection("ShoppingList").doc(docId).delete();
+      await _firestore.collection("ShoppingList").doc(docId).delete();
       print('Document deleted successfully');
     } catch (e) {
       print('Error deleting document: $e');
     }
-
-    // await inShoppingListOrNot(userName,ingredientName);
-
     update();
   }
 
-  addIngredientToShoppingList(String userName,String ingredientName) async {
+  addIngredientToShoppingList(String userName, String ingredientName) async {
     try {
-      // Add a new document with auto-generated ID
-      await _firestor.collection("ShoppingList").add({
+      await _firestore.collection("ShoppingList").add({
         "UserName": userName,
         "IngredientName": ingredientName,
         "Amount": "",
@@ -85,8 +73,8 @@ class ShoppingListController extends GetxController {
     } catch (e) {
       print('Error adding document: $e');
     }
-    // await getAllFavRecipes(userName);
     update();
   }
+
 
 }

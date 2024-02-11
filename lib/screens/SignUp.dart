@@ -232,7 +232,16 @@ class SignUpState extends State<SignUp>{
                         );
                       }
                     } catch (e) {
-                      print("Check Your Data, This Email may be used before");
+                      String errorMessage = 'An error occurred';
+                      if (e is FirebaseAuthException) {
+                        errorMessage = e.message ?? 'An error occurred';
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("this info must not empty"),
+                        ),
+                      );
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -247,17 +256,12 @@ class SignUpState extends State<SignUp>{
                   ),
                 ),
               ),
-
-
-
-
             ],
           ),
         ),
       ),
     );
   }
-
-
-
 }
+
+
