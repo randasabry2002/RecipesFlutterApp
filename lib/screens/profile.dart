@@ -255,7 +255,7 @@ Row(
                       "email", "null");
                   await _prefs.setString(
                       "userName", "null");
-                  Get.to(() => Signin());
+                  Get.offAll(() => Signin());
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.green, // Use a red color for the button
