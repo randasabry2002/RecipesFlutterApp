@@ -40,9 +40,18 @@ class SigninState extends State<Signin> {
       // ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 250, 20, 50),
+          padding: const EdgeInsets.fromLTRB(20, 80, 20, 50),
           child: Column(
             children: [
+              Container(
+                height: 300, // Set the desired height
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/recipeicon.png'), // Replace with your image path
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
               const SizedBox(height: 60),
 
               TextField(
@@ -127,6 +136,12 @@ class SigninState extends State<Signin> {
                       }
                     } catch (e) {
                       print("Wrong Email or Password");
+                      // const SnackBar(
+                      //   content: Text("Wrong Email or Password"),
+                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Wrong Email or Password"),
+                      ));
                     }
                   },
                   style: ElevatedButton.styleFrom(

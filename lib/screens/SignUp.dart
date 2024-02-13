@@ -19,6 +19,7 @@ class SignUp extends StatefulWidget {
 
 class SignUpState extends State<SignUp>{
   String password = '';
+  String confirmPassword = '';
   String email = '';
   String userName = '';
   bool isPasswordVisible = true;
@@ -181,7 +182,7 @@ class SignUpState extends State<SignUp>{
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   setState(() {
-                    password = value;
+                    confirmPassword = value;
                   });
                 },
                 decoration: InputDecoration(
@@ -214,25 +215,49 @@ class SignUpState extends State<SignUp>{
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                    if (userName.isEmpty) {/// //////////////////////////////////////////////////
+                      print("Enter User Name");
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Enter User Name"),
+                      ));
+                    } else if (email.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Enter Email"),
+                      ));
+                    } else if (password.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Enter Password"),
+                      ));
+                    } else if (confirmPassword!=password) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Check Your Password"),
+                      ));
+                    } else {
+                      try {
+                        await _auth.createUserWithEmailAndPassword(email: email,
+                            password: password);
 
-                      if (_auth.currentUser != null) {
-                        final SharedPreferences _prefs =
-                        await SharedPreferences.getInstance();
-                        await _prefs.setString("email", _auth.currentUser!.email.toString());
-                        await _prefs.setString("userName", userName);
+                        if (_auth.currentUser != null) {
+                          final SharedPreferences _prefs =
+                          await SharedPreferences.getInstance();
+                          await _prefs.setString(
+                              "email", _auth.currentUser!.email.toString());
+                          await _prefs.setString("userName", userName);
 
-                        addUser();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Navigation(),
-                          ),
-                        );
+                          addUser();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Navigation(),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        print("Check Your Data, This Email may be used before $e");
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Check Your Data, This Email may be used before or you haven't picked profile image"),
+                        ));
                       }
-                    } catch (e) {
-                      print("Check Your Data, This Email may be used before");
                     }
                   },
                   style: ElevatedButton.styleFrom(
