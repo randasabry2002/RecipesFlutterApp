@@ -258,6 +258,7 @@ class SignUpState extends State<SignUp>{
                           content: Text("Check Your Data, This Email may be used before or you haven't picked profile image"),
                         ));
                       }
+
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -272,17 +273,12 @@ class SignUpState extends State<SignUp>{
                   ),
                 ),
               ),
-
-
-
-
             ],
           ),
         ),
       ),
     );
   }
-
-
-
 }
+
+

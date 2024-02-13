@@ -46,7 +46,7 @@ class CategoryItem extends StatelessWidget {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     //an white color with 50% opacity at the bottom and transitions to Colors.transparent (fully transparent) at the top.
-                    colors: [Colors.white, Colors.transparent],
+                    colors: [Colors.orange, Colors.transparent],
                   ),
                 ),
                 child: Center(

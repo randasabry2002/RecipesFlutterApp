@@ -34,7 +34,13 @@ class HomeScreen extends StatelessWidget {
 
     // usersController.getUserByEmail(_auth.currentUser!.email!);
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      // Exit the application when back button is pressed
+      SystemNavigator.pop();
+      return true;
+    },
+    child: Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -303,7 +309,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 

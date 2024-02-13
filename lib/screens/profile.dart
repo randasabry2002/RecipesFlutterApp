@@ -101,47 +101,126 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
 
               SizedBox(height: 50),
+              // Row(
+              //   children: [
+              //     const Padding(
+              //       padding: EdgeInsets.fromLTRB(40,20,0,20),
+              //       child: Text(
+              //         'UserName:',
+              //         style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
+              //       ),
+              //     ),
+              //     Spacer(),
+              //     Padding(
+              //       padding: const EdgeInsets.fromLTRB(0,20,40,20),
+              //       child: Text(
+              //         '${usersController.userByEmail.value.UserName}',
+              //         style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              //
+              // SizedBox(height: 20),
+              //
+              // Row(
+              //   children: [
+              //     const Padding(
+              //       padding: EdgeInsets.fromLTRB(40,20,0,20),
+              //       child: Text(
+              //         'Email:',
+              //         style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
+              //       ),
+              //     ),
+              //     Spacer(),
+              //     Padding(
+              //       padding: const EdgeInsets.fromLTRB(0,20,40,20),
+              //       child: Text(
+              //         '${usersController.userByEmail.value.Email}',
+              //         style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+// Row for Username
               Row(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(40,20,0,20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       'UserName:',
                       style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0,20,40,20),
-                    child: Text(
-                      '${usersController.userByEmail.value.UserName}',
-                      style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 40, 20),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '${usersController.userByEmail.value.UserName}',
+                          style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
 
-              SizedBox(height: 20),
-
+// Row for Email
               Row(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(40,20,0,20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       'Email:',
                       style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0,20,40,20),
-                    child: Text(
-                      '${usersController.userByEmail.value.Email}',
-                      style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          '${usersController.userByEmail.value.Email}',
+                          style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
+
+
+
+// Row for Password (if needed)
+/* Row for Password
+Row(
+  children: [
+    const Padding(
+      padding: EdgeInsets.fromLTRB(40,20,0,20),
+      child: Text(
+        'Password:',
+        style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
+      ),
+    ),
+    Spacer(),
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0,20,40,20),
+        child: SingleChildScrollView( // Wrap with SingleChildScrollView
+          scrollDirection: Axis.horizontal, // Allow scrolling horizontally
+          child: Text(
+            '${usersController.userByEmail.value.Password}',
+            style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    ),
+  ],
+), */
 
               SizedBox(height: 20),
 

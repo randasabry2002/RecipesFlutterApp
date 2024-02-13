@@ -25,7 +25,8 @@ class FavoritePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Favorites',
+          title: const Text(
+            'Favorites',
             style: TextStyle(fontFamily: 'Poppins',color: Colors.white,fontWeight: FontWeight.bold),
           ),
           backgroundColor: Colors.green,
@@ -37,38 +38,48 @@ class FavoritePage extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  child: GetBuilder<UsersController>(
-                    builder: (val) {
-                      return Container(
-                        height: 720,
-                        // color: Colors.orange[300],
-                        child: ListView.builder(
-                          itemCount: val.OneUserFavorits.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            RecipesModel recipe = val.OneUserFavorits[index];
-                            return RecipeItem(
-                              recipe: recipe,
-                              onFavoritePressed: () async {
-                                if(recipe.Fav==false){
-                                  await val.addFav(userName!, recipe.RecipeName!);
-                                }
-                                else{
-                                  await val.deleteFav(userName!, recipe.RecipeName!);
-                                }
-                                val.update();
-                              },
-                              onTap: () {
-                                // Navigate to recipe details when a meal is tapped
-                                Get.to(() => RecipeDetailsScreen(recipe: recipe));
-                              },
-                            );
-                          },
+                child: GetBuilder<UsersController>(
+                  builder: (val) {
+                    if (val.OneUserFavorits.isEmpty) {
+                      // Display a zero state widget if there are no favorites
+                      return Center(
+                        child: Text(
+                          'You have no favorites yet.',
+                          style: TextStyle(fontSize: 20),
                         ),
                       );
-                    },
-                  ),
+                    } else {
+                      // Display the list of favorite recipes
+                      return SingleChildScrollView(
+                        child: Container(
+                          height: 720,
+                          child: ListView.builder(
+                            itemCount: val.OneUserFavorits.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              RecipesModel recipe = val.OneUserFavorits[index];
+                              return RecipeItem(
+                                recipe: recipe,
+                                onFavoritePressed: () async {
+                                  if(recipe.Fav==false){
+                                    await val.addFav(userName!, recipe.RecipeName!);
+                                  }
+                                  else{
+                                    await val.deleteFav(userName!, recipe.RecipeName!);
+                                  }
+                                  val.update();
+                                },
+                                onTap: () {
+                                  // Navigate to recipe details when a meal is tapped
+                                  Get.to(() => RecipeDetailsScreen(recipe: recipe));
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ],
